@@ -1,0 +1,38 @@
+[
+  {
+    "id": "SDMSE-1238",
+    "dateString": "2022/7/1",
+    "timeSpent": "1h",
+    "comment": "Estimaciones de HUs Fase 1"
+  },
+  {
+    "id": "INNOVA-60742",
+    "dateString": "2022/7/1",
+    "timeSpent": "30m",
+    "comment": "daily"
+  },
+  {
+    "id": "INNOVA-60524",
+    "dateString": "2022/7/1",
+    "timeSpent": "45m",
+    "comment": "Agrega responsive a indicador de inclinometro"
+  },
+  {
+    "id": "INNOVA-60523",
+    "dateString": "2022/7/1",
+    "timeSpent": "45m",
+    "comment": "Agrega responsive a indicador de piezometro"
+  },
+  {
+    "id": "INNOVA-60525",
+    "dateString": "2022/7/1",
+    "timeSpent": "45m",
+    "comment": "Agrega responsive a indicador de pluviometro"
+  },
+  {
+    "id": "INNOVA-60526",
+    "dateString": "2022/7/1",
+    "timeSpent": "2h 30m",
+    "comment": "Detalles de responsive en PC y algunas integraciones de dispositivos"
+  }
+]
