@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { readFile } from 'fs/promises';
 
+// Info de como obtener un token para utilizar https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/ 
+
 /**
  * 
  * @param {string} idTicket - Tienen la forma INNOVA-XXXXX
