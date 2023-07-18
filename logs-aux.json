@@ -1,0 +1,68 @@
+[
+  {
+    "id": "SDCW-15693",
+    "dateString": "2023/06/30",
+    "timeSpent": "0.5",
+    "comment": "."
+  },
+  {
+    "id": "SDCW-13768",
+    "dateString": "2023/06/30",
+    "timeSpent": "0.75",
+    "comment": "Resolución de bug"
+  },
+  {
+    "id": "SDCW-13767",
+    "dateString": "2023/06/30",
+    "timeSpent": "0.75",
+    "comment": "Resolución de bug"
+  },
+  {
+    "id": "SDCW-13151",
+    "dateString": "2023/06/30",
+    "timeSpent": "0.75",
+    "comment": "Resolución de bug"
+  },
+  {
+    "id": "SDCW-13150",
+    "dateString": "2023/06/30",
+    "timeSpent": "0.75",
+    "comment": "Resolución de bug"
+  },
+  {
+    "id": "SDCW-13149",
+    "dateString": "2023/06/30",
+    "timeSpent": "0.75",
+    "comment": "Resolución de bug"
+  },
+  {
+    "id": "SDCW-13119",
+    "dateString": "2023/06/30",
+    "timeSpent": "0.75",
+    "comment": "Resolución de bug"
+  },
+  {
+    "id": "SDCW-13045",
+    "dateString": "2023/06/30",
+    "timeSpent": "0.75",
+    "comment": "Resolución de bug"
+  },
+  {
+    "id": "SDCW-13382",
+    "dateString": "2023/06/30",
+    "timeSpent": "0.5",
+    "comment": "Análisis de bug"
+  },
+  {
+    "id": "SDCW-16062",
+    "dateString": "2023/06/30",
+    "timeSpent": "1.5",
+    "comment": "Resolución de consultas equipo frontend "
+  },
+  {
+    "id": "SDCW-16063",
+    "dateString": "2023/06/30",
+    "timeSpent": "1.0",
+    "comment": "Revisión de bugs permisos involucrados"
+  }
+]
