@@ -1,67 +1,48 @@
-import axios from 'axios';
-import { readFile } from 'fs/promises';
 import { getJsonArrayFronSheet } from './utils.js';
+import {
+  addTimeToIssue,
+  assignTicketToMe,
+  updateBasicFields,
+} from './requests.js';
 
-/**
- *
- * @param {string} idTicket - Tienen la forma INNOVA-XXXXX
- * @param {*} timeSpent - Tienen la forma "50m", "1h"15m, etc
- * @param {*} comment - Comentario opcional en la carga
- * @returns
- */
-const addTimeToIssue = async (
-  idTicket,
-  dateString,
-  timeSpent,
-  comment = ''
-) => {
-  const date = new Date(dateString);
-  if (!idTicket || !timeSpent || isNaN(date)) {
-    return reject();
-  }
-  const started =
-    new Date(date).toISOString().split('T')[0] + 'T12:00:00.755-0500';
-  console.log('🚀', idTicket, started, timeSpent, comment);
-  return axios.post(
-    `https://seguritechdeva.atlassian.net/rest/internal/3/issue/${idTicket}/worklog?adjustEstimate=auto`,
-    {
-      timeSpent,
-      comment: {
-        version: 1,
-        type: 'doc',
-        content: [
-          { type: 'paragraph', content: [{ type: 'text', text: comment }] },
-        ],
-      },
-      started,
-    },
-    {
-      headers: {
-        Authorization:
-          'Basic bHVjaWFuby5hcnJ1YUBpbm92dGVjaC5jb20ubXg6c3RMQXBOblh5Tnc3bUZzaG45V0lGQUM2',
-      },
-    }
-  );
-};
-
-// const json = JSON.parse(await readFile('./logs.json'));
-const json = getJsonArrayFronSheet('2023/07/17', ``);
+const json = getJsonArrayFronSheet('2023/08/03', ``);
 console.log('\n🚀 DATA');
 console.table(json);
 console.log('\n🚀 =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=');
 
-const successIds = [];
-const errorIds = [];
+const addTimeSuccessIds = [];
+const addTimeErrorIds = [];
+const updateFieldsSuccessIds = [];
+const updateFieldsErrorIds = [];
+const assignToMeSuccessIds = [];
+const assignToMeErrorIds = [];
 
 for (let index = 0; index < json.length; index++) {
   try {
-    const { id, dateString, timeSpent, comment } = json[index];
+    console.log('🕒');
+    console.table([json[index]]);
+    const { id, dateString, timeSpent, comment, originalEstimate, assignToMe } =
+      json[index];
     console.log('🚀', id);
     try {
       await addTimeToIssue(id, dateString, timeSpent, comment);
-      successIds.push(id);
+      addTimeSuccessIds.push(id);
     } catch (error) {
-      errorIds.push({ id, error });
+      addTimeErrorIds.push({ id, error });
+    }
+    try {
+      await updateBasicFields(id, originalEstimate);
+      updateFieldsSuccessIds.push(id);
+    } catch (error) {
+      updateFieldsErrorIds.push({ id, error });
+    }
+    try {
+      if (assignToMe) {
+        await assignTicketToMe(id);
+      }
+      assignToMeSuccessIds.push(id);
+    } catch (error) {
+      assignToMeErrorIds.push({ id, error });
     }
   } catch (error) {
     console.error('🚀', 'Id was not found');
@@ -69,9 +50,26 @@ for (let index = 0; index < json.length; index++) {
   }
 }
 
-console.log('\n🚀 SUCCESS IDs');
-console.log(successIds);
-console.log('\n🚀ERROR IDs');
-errorIds.forEach((element) => {
-  console.log(`${element.id} - ${element.error || ''}`);
-});
+function printErrorArray(array = []) {
+  array?.forEach((element) => {
+    console.log(`${element.id} - ${element.error || ''}`);
+  });
+}
+
+console.log('\n🚀 ADD TIME');
+console.log('\n SUCCESS IDs');
+console.log(addTimeSuccessIds);
+console.log('\n ERROR IDs');
+printErrorArray(addTimeErrorIds);
+
+console.log('\n🚀 UPDATE');
+console.log('\n  SUCCESSS IDs');
+console.log(updateFieldsSuccessIds);
+console.log('\n ERROR IDs');
+printErrorArray(updateFieldsErrorIds);
+
+console.log('\n🚀 ASSIGNED TO ME IDs');
+console.log('\n  SUCCESSS IDs');
+console.log(assignToMeSuccessIds);
+console.log('\n ERROR IDs');
+printErrorArray(assignToMeErrorIds);

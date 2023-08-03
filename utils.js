@@ -11,25 +11,38 @@ export function getJsonArrayFronSheet(day, str, exportFile = false) {
   const registers = str?.split('\n');
   const arrayRegisters = registers?.map((register) => register.split('\t'));
   const jsonArray = arrayRegisters?.reduce((acc, cv) => {
-    if (cv?.length < 3) {
+    if (cv?.length < 4) {
       return acc;
     }
-    const id = cv[1]?.replace(
+    const id = cv?.[1]?.replace(
       'https://seguritechdeva.atlassian.net/browse/',
       ''
     );
-    const timeSpent = (cv[0] || '0')?.replace(',', '.')?.trim();
+    let timeSpent = (cv?.[0] || '0')?.replace(',', '.')?.trim();
     if (!id || timeSpent === '0') {
       return acc;
     }
-    const comment = (cv[2] || '.')?.trim();
+    let originalEstimate = timeSpent;
+    // El agregado de 0.75 a la estimación original es random con 60% de posibilidad
+    if (Math.random() < 0.6) {
+      try {
+        originalEstimate = (Number(originalEstimate) + 0.75)?.toString();
+      } catch (error) {
+        originalEstimate = timeSpent;
+      }
+    }
+    const comment = (cv?.[2] || '.')?.trim();
+    const assignToMe = cv?.[3]?.trim()?.toLowerCase() === 'si';
+
     return [
       ...acc,
       {
         id,
         dateString: day,
         timeSpent,
+        originalEstimate,
         comment,
+        assignToMe,
       },
     ];
   }, []);
